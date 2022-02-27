@@ -1,4 +1,4 @@
-module example/hello
+module api-books-go
 
 go 1.17
 
