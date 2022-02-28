@@ -14,6 +14,7 @@ import (
 var db *gorm.DB
 
 func StartDB() {
+	// TODO: Ver variaveis de ambiente
 	strConexao := "host=localhost port=25432 user=admin dbname=books sslmode=disable password=123456"
 
 	database, err := gorm.Open(postgres.Open(strConexao), &gorm.Config{})
@@ -28,7 +29,6 @@ func StartDB() {
 	config.SetMaxIdleConns(10)
 	config.SetMaxOpenConns(100)
 	config.SetConnMaxLifetime(time.Hour)
-
 	migrations.RunMigrations(db)
 }
 

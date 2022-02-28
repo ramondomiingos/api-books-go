@@ -21,7 +21,7 @@ func ShowBook(c *gin.Context) {
 
 	err = db.First(&book, newid).Error
 	if err != nil {
-		c.JSON(400, gin.H{"error": "cannot find book" + err.Error()})
+		c.JSON(400, gin.H{"error": "cannot find book: " + err.Error()})
 
 		return
 	}
