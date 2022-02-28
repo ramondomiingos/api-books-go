@@ -1,7 +1,11 @@
 package database
 
 import (
+	"fmt"
+	"log"
 	"time"
+
+	"api-books-go/migrations"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -14,12 +18,18 @@ func StartDB() {
 
 	database, err := gorm.Open(postgres.Open(strConexao), &gorm.Config{})
 
+	if err != nil {
+		fmt.Println("Could not connect to the Postgres Database")
+		log.Fatal("Error: ", err)
+	}
+
 	db = database
 	config, _ := db.DB()
-
 	config.SetMaxIdleConns(10)
 	config.SetMaxOpenConns(100)
 	config.SetConnMaxLifetime(time.Hour)
+
+	migrations.RunMigrations(db)
 }
 
 func CloseConn() error {
@@ -35,6 +45,6 @@ func CloseConn() error {
 
 	return nil
 }
-func GetDatabase () *gorm.DB {
+func GetDatabase() *gorm.DB {
 	return db
 }
